@@ -62,16 +62,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="font-serif text-2xl text-midnight">Press Mentions</h2>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-8 opacity-60">
-            {["Financial Times", "Bloomberg", "ET Prime", "Moneycontrol"].map((name) => (
-              <span key={name} className="font-serif text-lg text-text-muted">{name}</span>
-            ))}
-          </div>
-        </div>
-      </section>
+      
     </>
   );
 }

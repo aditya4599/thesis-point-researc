@@ -16,17 +16,17 @@ export function BrandLogo({ variant = "navbar", className }: BrandLogoProps) {
       className={cn("group flex items-center gap-3", className)}
     >
       <Image
-        src="/logo.svg"
+        src="/image.png"
         alt=""
         width={isNavbar ? 44 : 36}
         height={isNavbar ? 44 : 36}
         className={cn(
           "shrink-0",
-          isNavbar ? "h-11 w-11" : "h-9 w-9"
+          isNavbar ? "h-14 w-14" : "h-10 w-10"
         )}
         priority={isNavbar}
       />
-      <div className="min-w-0">
+      <div className="min-w-0 text-center">
         <span
           className={cn(
             "block font-serif font-bold leading-tight text-white",
@@ -35,9 +35,10 @@ export function BrandLogo({ variant = "navbar", className }: BrandLogoProps) {
         >
           ThesisPoint
         </span>
+
         {isNavbar && (
-          <span className="block text-[11px] font-medium uppercase tracking-[0.14em] text-white/55">
-            Institutional Research
+          <span className="block text-[11px] font-medium uppercase tracking-[0.22em] text-white/55">
+            Research
           </span>
         )}
       </div>

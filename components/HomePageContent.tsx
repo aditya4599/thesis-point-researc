@@ -45,15 +45,11 @@ export function HomePageContent({ featured, latest, counts }: HomePageContentPro
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-sm font-medium uppercase tracking-widest text-white/70">
-              ThesisPoint
-            </p>
             <h1 className="mt-3 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl lg:text-[3.25rem]">
-              Conviction-Driven Investment Research
+              Beyond Market Consensus
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-slate-300">
-              Deep-dive stock reports, sector pitches, and market intelligence —
-              built for serious investors.
+              Opportunities emerge when fundamentals and sentiment diverge.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button asChild size="lg">
