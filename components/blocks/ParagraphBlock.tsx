@@ -1,16 +1,17 @@
 import type { ParagraphBlockData } from "@/lib/types/blocks";
 
 export function ParagraphBlock({ data }: { data: ParagraphBlockData }) {
-  if (data.html) {
+  const content = data.content.trim();
+  if (!content) return null;
+
+  if (content.includes("<")) {
     return (
       <div
-        className="article-block-paragraph prose-article"
-        dangerouslySetInnerHTML={{ __html: data.html }}
+        className="jpm-block-paragraph jpm-block-paragraph-html"
+        dangerouslySetInnerHTML={{ __html: content }}
       />
     );
   }
 
-  if (!data.text) return null;
-
-  return <p className="article-block-paragraph">{data.text}</p>;
+  return <p className="jpm-block-paragraph">{content}</p>;
 }

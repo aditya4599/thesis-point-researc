@@ -34,7 +34,7 @@ export interface ResearchItem {
   readingTime?: string;
   pdfUrl?: string;
   content?: string;
-  contentBlocks?: import("@/lib/types/blocks").ContentBlock[];
+  contentBlocks?: import("@/lib/types/blocks").ArticleBlock[];
   metadata?: ReportMetadata;
   authorData?: AuthorRow;
   companyData?: CompanyRow;

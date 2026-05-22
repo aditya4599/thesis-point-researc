@@ -1,5 +1,5 @@
 import type { ResearchItem } from "@/lib/types";
-import type { ContentBlock } from "@/lib/types/blocks";
+import type { ArticleBlock } from "@/lib/types/blocks";
 import { parseContentBlocks } from "@/lib/types/blocks";
 import type { ArticlePageMeta } from "@/lib/types/database";
 
@@ -8,51 +8,45 @@ export interface ArticleRenderContext {
   excerpt: string;
   subtitle?: string;
   heroImageUrl?: string;
-  keyTakeaways?: string[];
   tags: string[];
-  blocks: ContentBlock[];
+  blocks: ArticleBlock[];
 }
 
 /**
- * Resolves article body blocks from content_blocks, with legacy fallbacks
- * from content (HTML), excerpt, thumbnail_url, and metadata.
+ * Body blocks for the article column (excludes page-level hero when thumbnail is set).
  */
+export function getArticleBodyBlocks(
+  blocks: ArticleBlock[],
+  hasPageHero: boolean
+): ArticleBlock[] {
+  if (!hasPageHero) return blocks;
+  return blocks.filter((b) => b.type !== "hero");
+}
+
 export function resolveArticleBlocks(
   article: ResearchItem,
   contentBlocksRaw?: unknown
 ): ArticleRenderContext {
   const meta = (article.metadata ?? {}) as ArticlePageMeta;
   const parsed = parseContentBlocks(contentBlocksRaw);
+  const heroImageUrl = article.thumbnailUrl ?? meta.hero_image_url;
 
   if (parsed.length > 0) {
     return {
       title: article.title,
       excerpt: article.summary,
       subtitle: meta.subtitle,
-      heroImageUrl: article.thumbnailUrl ?? meta.hero_image_url,
-      keyTakeaways: meta.key_takeaways,
+      heroImageUrl,
       tags: meta.tags ?? [],
       blocks: parsed,
     };
   }
 
-  const blocks: ContentBlock[] = [];
-
-  const heroImage = article.thumbnailUrl ?? meta.hero_image_url;
-  if (heroImage || meta.subtitle || article.summary) {
-    blocks.push({
-      type: "hero",
-      data: {
-        subtitle: meta.subtitle ?? article.summary,
-        imageUrl: heroImage,
-        imageAlt: article.title,
-      },
-    });
-  }
+  const blocks: ArticleBlock[] = [];
 
   if (meta.key_takeaways?.length) {
     blocks.push({
-      type: "takeaways",
+      type: "key_takeaways",
       data: {
         title: "Key takeaways",
         items: meta.key_takeaways,
@@ -63,12 +57,12 @@ export function resolveArticleBlocks(
   if (article.content?.trim()) {
     blocks.push({
       type: "paragraph",
-      data: { html: article.content },
+      data: { content: article.content },
     });
   } else if (article.summary) {
     blocks.push({
       type: "paragraph",
-      data: { text: article.summary },
+      data: { content: article.summary },
     });
   }
 
@@ -76,8 +70,7 @@ export function resolveArticleBlocks(
     title: article.title,
     excerpt: article.summary,
     subtitle: meta.subtitle,
-    heroImageUrl: heroImage,
-    keyTakeaways: meta.key_takeaways,
+    heroImageUrl,
     tags: meta.tags ?? [],
     blocks,
   };

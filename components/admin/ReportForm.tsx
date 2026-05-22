@@ -123,7 +123,7 @@ export function ReportForm({ report, authors, companies }: ReportFormProps) {
               name="content_blocks"
               rows={10}
               defaultValue={blocksDefault}
-              placeholder={'[{"type":"paragraph","data":{"html":"<p>...</p>"}}]'}
+              placeholder={'[{"type":"heading","data":{"text":"Section"}},{"type":"paragraph","data":{"content":"..."}}]'}
               className="mt-1 w-full border border-border px-3 py-2 font-mono text-xs"
             />
           </label>

@@ -1,37 +1,33 @@
 /**
- * Modular content block types for article webpage rendering.
- * Stored in research_reports.content_blocks (JSONB).
+ * Article content blocks — stored in research_reports.content_blocks (JSONB).
+ * @see docs/CONTENT_GUIDE.md
  */
 
-export type BlockType =
+export type ArticleBlockType =
   | "hero"
+  | "heading"
   | "paragraph"
-  | "takeaways"
   | "quote"
   | "image"
-  | "section";
+  | "key_takeaways";
 
 export interface HeroBlockData {
-  subtitle?: string;
-  imageUrl?: string;
-  imageAlt?: string;
+  image: string;
+  alt?: string;
+}
+
+export interface HeadingBlockData {
+  text: string;
+  level?: 2 | 3;
 }
 
 export interface ParagraphBlockData {
-  /** Plain text paragraph */
-  text?: string;
-  /** Rich HTML (sanitized server-side in CMS) */
-  html?: string;
-}
-
-export interface TakeawaysBlockData {
-  title?: string;
-  items: string[];
+  content: string;
 }
 
 export interface QuoteBlockData {
-  text: string;
-  attribution?: string;
+  quote: string;
+  author?: string;
 }
 
 export interface ImageBlockData {
@@ -40,35 +36,129 @@ export interface ImageBlockData {
   caption?: string;
 }
 
-export interface SectionBlockData {
-  heading: string;
-  /** Semantic heading level for hierarchy */
-  level?: 2 | 3;
+export interface KeyTakeawaysBlockData {
+  title?: string;
+  items: string[];
 }
 
-export type ContentBlock =
+export type ArticleBlock =
   | { id?: string; type: "hero"; data: HeroBlockData }
+  | { id?: string; type: "heading"; data: HeadingBlockData }
   | { id?: string; type: "paragraph"; data: ParagraphBlockData }
-  | { id?: string; type: "takeaways"; data: TakeawaysBlockData }
   | { id?: string; type: "quote"; data: QuoteBlockData }
   | { id?: string; type: "image"; data: ImageBlockData }
-  | { id?: string; type: "section"; data: SectionBlockData };
+  | { id?: string; type: "key_takeaways"; data: KeyTakeawaysBlockData };
 
-export function isContentBlock(value: unknown): value is ContentBlock {
-  if (!value || typeof value !== "object") return false;
-  const block = value as ContentBlock;
-  const types: BlockType[] = [
-    "hero",
-    "paragraph",
-    "takeaways",
-    "quote",
-    "image",
-    "section",
-  ];
-  return types.includes(block.type as BlockType) && block.data != null;
+/** @deprecated Use ArticleBlock */
+export type ContentBlock = ArticleBlock;
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
 }
 
-export function parseContentBlocks(raw: unknown): ContentBlock[] {
+/**
+ * Normalizes CMS / legacy block shapes into the canonical ArticleBlock union.
+ */
+export function normalizeBlock(raw: unknown): ArticleBlock | null {
+  const block = asRecord(raw);
+  if (!block || typeof block.type !== "string") return null;
+
+  const data = asRecord(block.data) ?? {};
+  const id = typeof block.id === "string" ? block.id : undefined;
+
+  switch (block.type) {
+    case "heading":
+    case "section":
+      return {
+        id,
+        type: "heading",
+        data: {
+          text: String(data.text ?? data.heading ?? ""),
+          level: (data.level === 3 ? 3 : 2) as 2 | 3,
+        },
+      };
+
+    case "paragraph": {
+      const content = String(
+        data.content ?? data.html ?? data.text ?? ""
+      ).trim();
+      if (!content) return null;
+      return { id, type: "paragraph", data: { content } };
+    }
+
+    case "key_takeaways":
+    case "takeaways": {
+      const items = Array.isArray(data.items)
+        ? data.items.map((i) => String(i)).filter(Boolean)
+        : [];
+      if (!items.length) return null;
+      return {
+        id,
+        type: "key_takeaways",
+        data: {
+          title: typeof data.title === "string" ? data.title : undefined,
+          items,
+        },
+      };
+    }
+
+    case "quote": {
+      const quote = String(data.quote ?? data.text ?? "").trim();
+      if (!quote) return null;
+      return {
+        id,
+        type: "quote",
+        data: {
+          quote,
+          author:
+            typeof data.author === "string" ? data.author : undefined,
+        },
+      };
+    }
+
+    case "hero": {
+      const image = String(data.image ?? data.imageUrl ?? "").trim();
+      if (!image) return null;
+      return {
+        id,
+        type: "hero",
+        data: {
+          image,
+          alt:
+            typeof data.alt === "string"
+              ? data.alt
+              : typeof data.imageAlt === "string"
+                ? data.imageAlt
+                : undefined,
+        },
+      };
+    }
+
+    case "image": {
+      const url = String(data.url ?? "").trim();
+      if (!url) return null;
+      return {
+        id,
+        type: "image",
+        data: {
+          url,
+          alt: typeof data.alt === "string" ? data.alt : undefined,
+          caption:
+            typeof data.caption === "string" ? data.caption : undefined,
+        },
+      };
+    }
+
+    default:
+      return null;
+  }
+}
+
+export function parseContentBlocks(raw: unknown): ArticleBlock[] {
   if (!Array.isArray(raw)) return [];
-  return raw.filter(isContentBlock);
+  return raw
+    .map(normalizeBlock)
+    .filter((b): b is ArticleBlock => b !== null);
 }

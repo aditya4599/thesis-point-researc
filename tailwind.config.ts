@@ -17,6 +17,11 @@ const config: Config = {
           muted: "#5B6472",
         },
         border: "#E5E8EB",
+        jpm: {
+          gold: "#9A7B4F",
+          cream: "#F5F1EA",
+          ink: "#3D4450",
+        },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

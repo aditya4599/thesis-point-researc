@@ -33,24 +33,27 @@ Store an ordered JSON array in `content_blocks`:
 
 ```json
 [
-  { "type": "section", "data": { "heading": "Executive summary", "level": 2 } },
-  { "type": "paragraph", "data": { "html": "<p>Your analysis...</p>" } },
-  { "type": "takeaways", "data": { "title": "Key takeaways", "items": ["Point one", "Point two"] } },
-  { "type": "quote", "data": { "text": "Markets reward discipline.", "attribution": "ThesisPoint Research" } },
-  { "type": "image", "data": { "url": "https://...", "alt": "Chart", "caption": "Figure 1" } }
+  { "type": "heading", "data": { "text": "Executive summary" } },
+  { "type": "paragraph", "data": { "content": "Your analysis..." } },
+  { "type": "key_takeaways", "data": { "items": ["Point one", "Point two"] } },
+  { "type": "quote", "data": { "quote": "Markets reward discipline.", "author": "ThesisPoint Research" } },
+  { "type": "image", "data": { "url": "https://...", "alt": "Chart", "caption": "Figure 1" } },
+  { "type": "hero", "data": { "image": "https://...", "alt": "Housing market" } }
 ]
 ```
 
-Supported block types (see `components/blocks/` and `RenderBlocks.tsx`):
+Supported block types (`components/blocks/` + unified `RenderBlocks.tsx`):
 
-- `hero` — inline hero image/subtitle (page header also shows hero from thumbnail)
-- `paragraph` — `text` or `html`
-- `takeaways` — bullet list
-- `quote` — pull quote
-- `image` — figure with optional caption
-- `section` — section heading (h2/h3)
+- `heading` — large serif section title
+- `paragraph` — `content` (plain text or HTML)
+- `key_takeaways` — beige panel with gold bullets
+- `quote` — pull quote (`quote`, optional `author`)
+- `image` — inline figure (`url`, `alt`, `caption`)
+- `hero` — in-body full-width image (page hero uses `thumbnail_url` separately)
 
-If `content_blocks` is empty, the site builds blocks from `content` HTML, `excerpt`, `metadata.key_takeaways`, and `thumbnail_url`.
+Legacy types (`section`, `takeaways`, `html` fields) are normalized automatically.
+
+If `content_blocks` is empty, the site uses `content` HTML and `metadata.key_takeaways`. The page hero image comes from `thumbnail_url`.
 
 ## Adding a new stock report
 

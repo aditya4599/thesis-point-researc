@@ -1,32 +1,17 @@
 import Image from "next/image";
 import type { HeroBlockData } from "@/lib/types/blocks";
 
-interface HeroBlockProps {
-  data: HeroBlockData;
-  /** Page-level title shown above subtitle when not in page chrome */
-  showInline?: boolean;
-}
-
-export function HeroBlock({ data, showInline = false }: HeroBlockProps) {
-  if (!data.imageUrl && !data.subtitle) return null;
-
+export function HeroBlock({ data }: { data: HeroBlockData }) {
   return (
-    <div className={showInline ? "article-block-hero-inline" : "article-block-hero"}>
-      {data.imageUrl && (
-        <div className="article-hero-image-wrap">
-          <Image
-            src={data.imageUrl}
-            alt={data.imageAlt ?? ""}
-            width={1280}
-            height={720}
-            className="article-hero-image"
-            priority
-          />
-        </div>
-      )}
-      {data.subtitle && (
-        <p className="article-hero-subtitle">{data.subtitle}</p>
-      )}
-    </div>
+    <figure className="jpm-block-hero">
+      <Image
+        src={data.image}
+        alt={data.alt ?? "Article illustration"}
+        width={1400}
+        height={788}
+        className="jpm-block-hero-img"
+        sizes="(max-width: 1280px) 100vw, 1280px"
+      />
+    </figure>
   );
 }

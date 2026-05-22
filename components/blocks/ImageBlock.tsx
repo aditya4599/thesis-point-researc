@@ -2,19 +2,20 @@ import Image from "next/image";
 import type { ImageBlockData } from "@/lib/types/blocks";
 
 export function ImageBlock({ data }: { data: ImageBlockData }) {
-  if (!data.url) return null;
-
   return (
-    <figure className="article-block-image">
+    <figure className="jpm-block-image">
       <Image
         src={data.url}
-        alt={data.alt ?? ""}
-        width={960}
-        height={540}
-        className="article-inline-image"
+        alt={data.alt ?? data.caption ?? "Article image"}
+        width={1200}
+        height={675}
+        className="jpm-block-image-img"
+        sizes="(max-width: 768px) 100vw, 720px"
       />
       {data.caption && (
-        <figcaption className="article-image-caption">{data.caption}</figcaption>
+        <figcaption className="jpm-block-image-caption">
+          {data.caption}
+        </figcaption>
       )}
     </figure>
   );
