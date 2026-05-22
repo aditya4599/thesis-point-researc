@@ -1,55 +1,113 @@
-import { HeroBlock } from "@/components/blocks/HeroBlock";
-import { ParagraphBlock } from "@/components/blocks/ParagraphBlock";
-import { TakeawaysBlock } from "@/components/blocks/TakeawaysBlock";
-import { QuoteBlock } from "@/components/blocks/QuoteBlock";
-import { ImageBlock } from "@/components/blocks/ImageBlock";
-import { SectionBlock } from "@/components/blocks/SectionBlock";
-import type { ContentBlock } from "@/lib/types/blocks";
+import Image from "next/image";
 
-interface RenderBlocksProps {
-  blocks: ContentBlock[];
-  /** Skip hero blocks when page chrome already renders hero */
-  skipHero?: boolean;
-  className?: string;
+interface Block {
+  type: string;
+  data: any;
 }
 
-/**
- * Modular block renderer for article webpage content.
- * Extend the switch when new block types are added to the CMS.
- */
 export function RenderBlocks({
   blocks,
-  skipHero = false,
-  className,
-}: RenderBlocksProps) {
-  const visible = skipHero
-    ? blocks.filter((b) => b.type !== "hero")
-    : blocks;
-
+}: {
+  blocks: Block[];
+}) {
   return (
-    <div className={className ?? "article-blocks"}>
-      {visible.map((block, index) => (
-        <BlockNode key={block.id ?? `${block.type}-${index}`} block={block} />
-      ))}
+    <div className="space-y-10">
+      {blocks.map((block, index) => {
+        switch (block.type) {
+
+          case "heading":
+            return (
+              <h2
+                key={index}
+                className="font-serif text-4xl leading-tight text-midnight"
+              >
+                {block.data.text}
+              </h2>
+            );
+
+          case "paragraph":
+            return (
+              <p
+                key={index}
+                className="text-lg leading-9 text-slate-700"
+              >
+                {block.data.content}
+              </p>
+            );
+
+          case "quote":
+            return (
+              <div
+                key={index}
+                className="border-l-4 border-amber-500 pl-6 py-4"
+              >
+                <p className="font-serif text-3xl italic leading-relaxed text-slate-800">
+                  &quot;{block.data.quote}&quot;
+                </p>
+
+                {block.data.author && (
+                  <p className="mt-4 text-sm text-slate-500">
+                    {block.data.author}
+                  </p>
+                )}
+              </div>
+            );
+
+          case "key_takeaways":
+            return (
+              <div
+                key={index}
+                className="rounded-3xl bg-[#f5f1ea] p-10"
+              >
+                <h2 className="mb-8 font-serif text-4xl text-midnight">
+                  Key takeaways
+                </h2>
+
+                <div className="space-y-5">
+                  {block.data.items.map(
+                    (item: string, i: number) => (
+                      <div
+                        key={i}
+                        className="flex gap-4"
+                      >
+                        <span className="mt-3 h-2 w-2 rounded-full bg-amber-600" />
+
+                        <p className="text-lg leading-8 text-slate-700">
+                          {item}
+                        </p>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            );
+
+          case "image":
+            return (
+              <div key={index}>
+                <Image
+                  src={block.data.url}
+                  alt={
+                    block.data.caption ||
+                    "Article image"
+                  }
+                  width={1200}
+                  height={700}
+                  className="w-full rounded-3xl object-cover"
+                />
+
+                {block.data.caption && (
+                  <p className="mt-3 text-sm text-slate-500">
+                    {block.data.caption}
+                  </p>
+                )}
+              </div>
+            );
+
+          default:
+            return null;
+        }
+      })}
     </div>
   );
-}
-
-function BlockNode({ block }: { block: ContentBlock }) {
-  switch (block.type) {
-    case "hero":
-      return <HeroBlock data={block.data} />;
-    case "paragraph":
-      return <ParagraphBlock data={block.data} />;
-    case "takeaways":
-      return <TakeawaysBlock data={block.data} />;
-    case "quote":
-      return <QuoteBlock data={block.data} />;
-    case "image":
-      return <ImageBlock data={block.data} />;
-    case "section":
-      return <SectionBlock data={block.data} />;
-    default:
-      return null;
-  }
 }
