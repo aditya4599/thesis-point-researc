@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getAdminCookieName, isAdminAuthenticated } from "@/lib/admin-auth";
 import { uploadFile, type StorageBucket } from "@/lib/storage";
+
 import type {
   ArticlePageMeta,
   AuthorInsert,
@@ -146,7 +147,10 @@ export async function deleteReport(formData: FormData) {
   const id = formData.get("id") as string;
   const supabase = createAdminClient();
   const { error } = await supabase.from("research_reports").delete().eq("id", id);
-  if (error) throw error;
+  if (error) {
+  console.log(error);
+  throw new Error(JSON.stringify(error));
+}
   revalidatePath("/");
   redirect("/admin/reports");
 }

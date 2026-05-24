@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ExternalLink, X } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
+
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -14,11 +15,32 @@ export function Footer() {
               reports, pitch decks, and sector intelligence.
             </p>
             <div className="mt-4 flex gap-4">
-              <a href="https://linkedin.com" className="hover:text-white">
-                <ExternalLink className="h-5 w-5" />
+              <a
+                href="https://www.linkedin.com/in/thesispointresearch/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/Linkedin.svg"
+                  alt="LinkedIn"
+                  width={20}
+                  height={20}
+                  className="opacity-80 transition hover:opacity-100"
+                />
               </a>
-              <a href="https://twitter.com" className="hover:text-white" aria-label="X">
-                <X className="h-5 w-5" />
+
+              <a
+                href="https://www.instagram.com/thesispointresearch"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/instagram.svg"
+                  alt="Instagram"
+                  width={20}
+                  height={20}
+                  className="opacity-80 transition hover:opacity-100"
+                />
               </a>
             </div>
           </div>
@@ -76,7 +98,7 @@ export function Footer() {
           </div>
         </div>
         <p className="mt-12 border-t border-white/10 pt-8 text-xs text-slate-500">
-          © {new Date().getFullYear()} ThesisPoint. All rights
+          © {new Date().getFullYear()} ThesisPoint Research. All rights
           reserved. The information on this site is for informational purposes
           only and does not constitute investment advice or a recommendation to
           buy or sell any security.

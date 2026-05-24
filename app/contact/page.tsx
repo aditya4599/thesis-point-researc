@@ -62,10 +62,10 @@ export default function ContactPage() {
             <ExternalLink className="h-6 w-6 text-midnight" />
             <h3 className="mt-3 font-semibold text-midnight">LinkedIn</h3>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/thesispointresearch/"
               className="text-midnight hover:underline"
             >
-              ThesisPoint
+              ThesisPoint Research on LinkedIn
             </a>
           </div>
           <div className="border border-dashed border-border bg-background p-8 text-center">

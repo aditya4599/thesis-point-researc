@@ -4,6 +4,7 @@ import { deleteReport } from "@/app/admin/actions";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { getAllReportsAdmin } from "@/lib/queries/reports";
 import { formatDate } from "@/lib/utils";
+export const dynamic = "force-dynamic";
 
 export default async function AdminReportsPage() {
   if (!(await isAdminAuthenticated())) redirect("/admin/login");

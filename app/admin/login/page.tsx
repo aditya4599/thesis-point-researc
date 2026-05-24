@@ -7,7 +7,7 @@ export default function AdminLoginPage() {
         action={adminLogin}
         className="w-full max-w-sm border border-border bg-background p-8 shadow-card"
       >
-        <h1 className="font-serif text-2xl text-midnight">ThesisPoint CMS</h1>
+        <h1 className="font-serif text-2xl text-midnight">ThesisPoint Research CMS</h1>
         <p className="mt-2 text-sm text-text-muted">Admin access only</p>
         <label className="mt-6 block text-sm font-medium text-midnight">
           Admin secret

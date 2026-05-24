@@ -30,10 +30,10 @@ export default async function AboutPage() {
       <section className="bg-midnight py-20 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <blockquote className="font-serif text-3xl leading-relaxed sm:text-4xl">
-            &ldquo;We publish research we would own — clear theses, honest risks,
+            &ldquo;We publish research we would own clear thesis, honest risks,
             and the discipline to change our minds when the facts change.&rdquo;
           </blockquote>
-          <p className="mt-6 text-slate-400">— ThesisPoint</p>
+          <p className="mt-6 text-slate-400">— ThesisPoint Research</p>
         </div>
       </section>
 

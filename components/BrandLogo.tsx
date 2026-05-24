@@ -36,7 +36,7 @@ export function BrandLogo({ variant = "navbar", className }: BrandLogoProps) {
           ThesisPoint
         </span>
 
-        {isNavbar && (
+        { (
           <span className="block text-[11px] font-medium uppercase tracking-[0.22em] text-white/55">
             Research
           </span>
