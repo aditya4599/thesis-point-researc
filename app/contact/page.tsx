@@ -23,7 +23,7 @@ export default function ContactPage() {
           </div>
           <div>
             <label className="text-sm font-medium">Email</label>
-            <Input className="mt-1" type="email" required placeholder="you@company.com" />
+            <Input className="mt-1" type="email" required placeholder="Thesispointresearch.com" />
           </div>
           <div>
             <label className="text-sm font-medium">Subject</label>
@@ -68,11 +68,14 @@ export default function ContactPage() {
               ThesisPoint Research on LinkedIn
             </a>
           </div>
-          <div className="border border-dashed border-border bg-background p-8 text-center">
-            <p className="text-sm text-text-muted">Calendly embed placeholder</p>
-            <p className="mt-2 text-xs text-text-muted">
-              Schedule a call with our research team
-            </p>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <iframe
+              src="https://cal.com/thesispointresearch/30min?theme=light&brandColor=0f172a?embed_domain=thesispoint.com&embed_type=Inline"
+              width="100%"
+              height="700"
+              frameBorder="0"
+              className="w-full"
+            />
           </div>
         </div>
       </div>

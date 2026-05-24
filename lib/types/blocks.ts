@@ -9,11 +9,19 @@ export type ArticleBlockType =
   | "paragraph"
   | "quote"
   | "image"
-  | "key_takeaways";
+  | "key_takeaways"
+  | "divider"
+  | "stat";
+export interface DividerBlockData {}
 
 export interface HeroBlockData {
   image: string;
   alt?: string;
+  category?: string;
+  title?: string;
+  subtitle?: string;
+  author?: string;
+  publishedAt?: string;
 }
 
 export interface HeadingBlockData {
@@ -40,14 +48,19 @@ export interface KeyTakeawaysBlockData {
   title?: string;
   items: string[];
 }
-
+export interface StatBlockData {
+  value: string;
+  label: string;
+}
 export type ArticleBlock =
   | { id?: string; type: "hero"; data: HeroBlockData }
   | { id?: string; type: "heading"; data: HeadingBlockData }
   | { id?: string; type: "paragraph"; data: ParagraphBlockData }
   | { id?: string; type: "quote"; data: QuoteBlockData }
   | { id?: string; type: "image"; data: ImageBlockData }
-  | { id?: string; type: "key_takeaways"; data: KeyTakeawaysBlockData };
+  | { id?: string; type: "key_takeaways"; data: KeyTakeawaysBlockData }
+  | { id?: string; type: "divider"; data: DividerBlockData }
+  | { id?: string; type: "stat"; data: StatBlockData };
 
 /** @deprecated Use ArticleBlock */
 export type ContentBlock = ArticleBlock;
@@ -147,6 +160,27 @@ export function normalizeBlock(raw: unknown): ArticleBlock | null {
           alt: typeof data.alt === "string" ? data.alt : undefined,
           caption:
             typeof data.caption === "string" ? data.caption : undefined,
+        },
+      };
+    }
+    case "divider":
+      return {
+        id,
+        type: "divider",
+        data: {},
+      };
+    case "stat": {
+      const value = String(data.value ?? "").trim();
+      const label = String(data.label ?? "").trim();
+
+      if (!value || !label) return null;
+
+      return {
+        id,
+        type: "stat",
+        data: {
+          value,
+          label,
         },
       };
     }

@@ -5,6 +5,8 @@ import { KeyTakeawaysBlock } from "@/components/blocks/KeyTakeawaysBlock";
 import { ParagraphBlock } from "@/components/blocks/ParagraphBlock";
 import { QuoteBlock } from "@/components/blocks/QuoteBlock";
 import type { ArticleBlock } from "@/lib/types/blocks";
+import { DividerBlock } from "@/components/blocks/DividerBlock";
+import { StatBlock } from "@/components/blocks/StatBlock";
 
 interface RenderBlocksProps {
   blocks: ArticleBlock[];
@@ -28,6 +30,10 @@ function BlockNode({ block }: { block: ArticleBlock }) {
       return <ImageBlock data={block.data} />;
     case "key_takeaways":
       return <KeyTakeawaysBlock data={block.data} />;
+    case "divider":
+      return <DividerBlock />;
+    case "stat":
+      return <StatBlock data={block.data} />;
     default: {
       const _exhaustive: never = block;
       return _exhaustive;
