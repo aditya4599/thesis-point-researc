@@ -89,14 +89,8 @@
   .editorial-sidebar-col {
     @apply w-full shrink-0 lg:w-[380px];
   }
-
   .editorial-sidebar-panel {
-    position: sticky;
-    top: 6rem;
-
-    max-height: calc(100vh - 6rem);
-
-    overflow: visible;
+    position: relative;
   }
   .editorial-sidebar-category {
     @apply text-xs font-semibold uppercase tracking-[0.22em] text-jpm-gold;

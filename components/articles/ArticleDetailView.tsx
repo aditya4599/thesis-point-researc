@@ -43,14 +43,14 @@ export function ArticleDetailView({
 
       <div className="editorial-article-shell">
         <div className="editorial-article-grid">
-          <div className="editorial-sidebar-col">
+          <aside className="editorial-sidebar-col sticky top-24 self-start h-fit">
             <HeroBlock
               data={sidebarData}
               linkedinUrl={article.authorData?.linkedin_url}
               shareTitle={context.title}
               shareSummary={context.excerpt}
             />
-          </div>
+          </aside>
 
           <div className="editorial-main-col">
             {heroImageUrl && (
