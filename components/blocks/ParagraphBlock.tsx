@@ -7,11 +7,11 @@ export function ParagraphBlock({ data }: { data: ParagraphBlockData }) {
   if (content.includes("<")) {
     return (
       <div
-        className="jpm-block-paragraph jpm-block-paragraph-html"
+        className="editorial-paragraph editorial-paragraph-html"
         dangerouslySetInnerHTML={{ __html: content }}
       />
     );
   }
 
-  return <p className="jpm-block-paragraph">{content}</p>;
+  return <p className="editorial-paragraph">{content}</p>;
 }

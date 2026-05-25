@@ -12,16 +12,23 @@ export type ArticleBlockType =
   | "key_takeaways"
   | "divider"
   | "stat";
-export interface DividerBlockData {}
+export type DividerBlockData = Record<string, never>;
 
 export interface HeroBlockData {
   image: string;
   alt?: string;
+
   category?: string;
+
   title?: string;
+
   subtitle?: string;
+
   author?: string;
+
   publishedAt?: string;
+
+  takeaways?: string[];
 }
 
 export interface HeadingBlockData {
@@ -133,7 +140,14 @@ export function normalizeBlock(raw: unknown): ArticleBlock | null {
 
     case "hero": {
       const image = String(data.image ?? data.imageUrl ?? "").trim();
-      if (!image) return null;
+      const title = String(data.title ?? "").trim();
+      const category = String(data.category ?? "").trim();
+      if (!image && !title && !category) return null;
+
+      const takeaways = Array.isArray(data.takeaways)
+        ? data.takeaways.map((i) => String(i)).filter(Boolean)
+        : undefined;
+
       return {
         id,
         type: "hero",
@@ -145,6 +159,17 @@ export function normalizeBlock(raw: unknown): ArticleBlock | null {
               : typeof data.imageAlt === "string"
                 ? data.imageAlt
                 : undefined,
+          category: category || undefined,
+          title: title || undefined,
+          subtitle:
+            typeof data.subtitle === "string" ? data.subtitle : undefined,
+          author:
+            typeof data.author === "string" ? data.author : undefined,
+          publishedAt:
+            typeof data.publishedAt === "string"
+              ? data.publishedAt
+              : undefined,
+          takeaways,
         },
       };
     }

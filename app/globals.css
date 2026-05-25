@@ -60,212 +60,193 @@
     background-size: 24px 24px, 48px 48px, 48px 48px;
   }
 
-  /* —— JP Morgan Insights–style article layout —— */
-  .jpm-article {
-    @apply bg-background;
-  }
-
-  .jpm-article-header {
-    @apply border-b border-border bg-background;
-  }
-
-  .jpm-article-header-inner {
-    @apply mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14;
-  }
-
-  .jpm-breadcrumb {
-    @apply flex flex-wrap items-center gap-1.5 text-xs text-text-muted;
-  }
-
-  .jpm-breadcrumb a {
-    @apply transition-colors hover:text-midnight;
-  }
-
-  .jpm-breadcrumb-sep {
-    @apply text-border;
-  }
-
-  .jpm-breadcrumb-current {
-    @apply text-text-muted;
-  }
-
-  .jpm-article-meta-row {
-    @apply mt-5 flex flex-wrap items-center gap-2;
-  }
-
-  .jpm-tag {
-    @apply text-xs font-medium uppercase tracking-wider text-jpm-ink/80;
-  }
-
-  .jpm-article-title {
-    @apply mt-8 font-serif text-[2.5rem] font-bold leading-[1.08] tracking-tight text-midnight sm:text-5xl lg:text-[3.25rem];
-  }
-
-  .jpm-article-date {
-    @apply mt-6 text-sm font-semibold text-midnight;
-  }
-
-  .jpm-article-deck {
-    @apply mt-6 max-w-3xl text-lg leading-[1.7] text-jpm-ink;
-  }
-
-  .jpm-article-hero-wrap {
+  /* —— Institutional editorial article layout —— */
+  .editorial-article {
     @apply w-full bg-background;
   }
 
-  .jpm-article-hero-inner {
-    @apply mx-auto w-full max-w-[1440px];
+  .editorial-breadcrumb-bar {
+    @apply border-b border-border;
   }
 
-  .jpm-article-hero-img {
-    @apply aspect-[16/9] w-full object-cover;
+  .editorial-breadcrumb-inner {
+    @apply mx-auto flex max-w-[1280px] flex-wrap items-center gap-2 px-4 py-4 text-xs text-text-muted sm:px-8;
   }
 
-  .jpm-article-body-wrap {
-    @apply mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16;
+  .editorial-breadcrumb-inner a {
+    @apply hover:text-midnight;
   }
 
-  .jpm-article-layout {
-    @apply grid gap-12 lg:grid-cols-[minmax(0,42rem)_280px] lg:gap-16 lg:justify-center;
+  .editorial-article-shell {
+    @apply mx-auto w-full max-w-[1280px] px-4 py-10 sm:px-8 sm:py-14;
   }
 
-  .jpm-article-main {
-    @apply min-w-0;
+  /* Single grid: fixed sidebar + fluid main (prevents nested collapse) */
+  .editorial-article-grid {
+    @apply grid w-full grid-cols-1 items-start gap-10 lg:grid-cols-[380px_1fr] lg:gap-16;
   }
 
-  .jpm-blocks {
-    @apply flex flex-col gap-12;
+  .editorial-sidebar-col {
+    @apply w-full shrink-0 lg:w-[380px];
   }
 
-  .jpm-block-heading {
-    @apply font-serif text-[2rem] font-bold leading-tight tracking-tight text-midnight sm:text-4xl;
+  .editorial-sidebar-panel {
+    @apply lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto;
   }
 
-  .jpm-block-heading-sm {
-    @apply font-serif text-2xl font-bold leading-snug text-midnight;
+  .editorial-sidebar-category {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-jpm-gold;
   }
 
-  .jpm-block-paragraph {
-    @apply text-lg leading-[1.85] text-jpm-ink;
+  .editorial-sidebar-title {
+    @apply mt-5 font-serif text-[2.75rem] font-bold leading-[1.05] tracking-tight text-midnight;
   }
 
-  .jpm-block-paragraph-html p {
-    @apply mb-6 text-lg leading-[1.85] text-jpm-ink last:mb-0;
+  .editorial-sidebar-date {
+    @apply mt-5 text-sm font-semibold text-midnight;
   }
 
-  .jpm-block-paragraph-html h2 {
-    @apply mb-4 mt-10 font-serif text-3xl font-bold text-midnight;
+  .editorial-sidebar-subtitle {
+    @apply mt-8 text-lg leading-relaxed text-jpm-ink;
   }
 
-  .jpm-block-paragraph-html h3 {
-    @apply mb-3 mt-8 font-serif text-2xl font-bold text-midnight/90;
+  .editorial-sidebar-takeaways {
+    @apply mt-10 rounded-sm bg-jpm-cream px-5 py-8;
   }
 
-  .jpm-block-paragraph-html ul {
-    @apply mb-6 list-disc space-y-2 pl-6 text-lg leading-[1.85] text-jpm-ink;
+  .editorial-sidebar-takeaways-heading {
+    @apply font-serif text-3xl font-bold leading-none text-midnight;
   }
 
-  .jpm-block-paragraph-html strong {
-    @apply font-semibold text-midnight;
-  }
-
-  .jpm-block-takeaways {
-    @apply -mx-2 bg-jpm-cream px-6 py-10 sm:mx-0 sm:px-10 sm:py-12;
-  }
-
-  .jpm-block-takeaways-title {
-    @apply font-serif text-4xl font-bold leading-none sm:text-[2.75rem];
-  }
-
-  .text-jpm-gold {
+  .editorial-accent {
     color: theme("colors.jpm.gold");
   }
 
-  .jpm-block-takeaways-list {
-    @apply mt-8 space-y-5;
+  .editorial-sidebar-takeaways-list {
+    @apply mt-6 space-y-4;
   }
 
-  .jpm-block-takeaways-item {
-    @apply flex gap-4 text-lg leading-[1.75] text-jpm-ink;
+  .editorial-sidebar-takeaways-list li {
+    @apply flex gap-3 text-base leading-relaxed text-jpm-ink;
   }
 
-  .jpm-block-takeaways-bullet {
-    @apply mt-2.5 h-2 w-2 shrink-0 rounded-full bg-jpm-gold;
+  .editorial-sidebar-bullet {
+    @apply mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-jpm-gold;
   }
 
-  .jpm-block-quote {
-    @apply border-l-[3px] border-jpm-gold py-2 pl-8;
+  .editorial-sidebar-socials {
+    @apply mt-10 flex items-center gap-5 text-text-muted;
   }
 
-  .jpm-block-quote-text {
-    @apply font-serif text-2xl italic leading-[1.45] text-midnight sm:text-3xl;
+  .editorial-sidebar-social-link {
+    @apply transition-colors hover:text-midnight;
   }
 
-  .jpm-block-quote-author {
-    @apply mt-5 text-sm font-medium text-text-muted;
+  .editorial-main-col {
+    @apply min-w-0 w-full;
   }
 
-  .jpm-block-hero {
-    @apply -mx-2 sm:mx-0;
+  .editorial-hero-figure {
+    @apply mb-12 w-full overflow-hidden;
   }
 
-  .jpm-block-hero-img {
-    @apply w-full object-cover;
+  .editorial-hero-image {
+    @apply h-auto w-full max-w-[820px] object-cover;
   }
 
-  .jpm-block-image-img {
-    @apply w-full border border-border object-cover;
+  .editorial-content-body {
+    @apply w-full max-w-[820px];
   }
 
-  .jpm-block-image-caption {
-    @apply mt-3 text-center text-sm text-text-muted;
+  .editorial-blocks {
+    @apply flex w-full flex-col gap-10;
   }
 
-  .jpm-article-share {
-    @apply mt-14 flex items-center gap-4 border-t border-border pt-8;
+  .editorial-block-heading {
+    @apply w-full font-serif text-3xl font-bold leading-tight text-midnight sm:text-4xl;
   }
 
-  .jpm-article-share-label {
-    @apply text-sm text-text-muted;
+  .editorial-block-heading-sm {
+    @apply w-full font-serif text-2xl font-bold leading-snug text-midnight;
   }
 
-  .jpm-article-author {
-    @apply mt-14 border-t border-border pt-10;
+  .editorial-paragraph {
+    @apply w-full text-lg leading-[1.85] text-jpm-ink;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
 
-  .jpm-article-author-label {
+  .editorial-paragraph-html {
+    @apply w-full max-w-none;
+  }
+
+  .editorial-paragraph-html p {
+    @apply mb-6 w-full text-lg leading-[1.85] text-jpm-ink last:mb-0;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .editorial-paragraph-html h2 {
+    @apply mb-4 mt-10 w-full font-serif text-3xl font-bold text-midnight;
+  }
+
+  .editorial-paragraph-html h3 {
+    @apply mb-3 mt-8 w-full font-serif text-2xl font-bold text-midnight/90;
+  }
+
+  .editorial-paragraph-html ul {
+    @apply mb-6 w-full list-disc space-y-2 pl-6 text-lg leading-[1.85] text-jpm-ink;
+  }
+
+  .editorial-paragraph-html strong {
+    @apply font-semibold text-midnight;
+  }
+
+  .editorial-block-quote {
+    @apply w-full border-l-[3px] border-jpm-gold py-1 pl-8;
+  }
+
+  .editorial-block-quote-text {
+    @apply font-serif text-2xl italic leading-[1.4] text-midnight sm:text-[1.75rem];
+  }
+
+  .editorial-block-quote-author {
+    @apply mt-4 text-sm font-medium text-text-muted;
+  }
+
+  .editorial-block-image {
+    @apply w-full;
+  }
+
+  .editorial-block-image-img {
+    @apply h-auto w-full border border-border object-cover;
+  }
+
+  .editorial-block-image-caption {
+    @apply mt-3 text-sm text-text-muted;
+  }
+
+  .editorial-author {
+    @apply mt-16 w-full max-w-[820px] border-t border-border pt-10;
+  }
+
+  .editorial-author-label {
     @apply mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-text-muted;
   }
 
-  .jpm-article-sidebar {
-    @apply space-y-6 lg:sticky lg:top-24 lg:self-start;
+  .editorial-related {
+    @apply border-t border-border bg-surface py-14;
   }
 
-  .jpm-sidebar-byline {
-    @apply text-sm text-text-muted;
+  .editorial-related-inner {
+    @apply mx-auto max-w-[1280px] px-4 sm:px-8;
   }
 
-  .jpm-sidebar-card {
-    @apply rounded-sm border border-border bg-background p-6;
-  }
-
-  .jpm-sidebar-heading {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-text-muted;
-  }
-
-  .jpm-sidebar-text {
-    @apply mt-3 text-sm leading-7 text-jpm-ink;
-  }
-
-  .jpm-related {
-    @apply mt-20 border-t border-border pt-14;
-  }
-
-  .jpm-related-title {
+  .editorial-related-title {
     @apply font-serif text-3xl text-midnight;
   }
 
-  .jpm-related-grid {
+  .editorial-related-grid {
     @apply mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3;
   }
 

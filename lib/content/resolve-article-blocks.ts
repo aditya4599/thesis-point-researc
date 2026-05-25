@@ -1,5 +1,5 @@
 import type { ResearchItem } from "@/lib/types";
-import type { ArticleBlock } from "@/lib/types/blocks";
+import type { ArticleBlock, HeroBlockData } from "@/lib/types/blocks";
 import { parseContentBlocks } from "@/lib/types/blocks";
 import type { ArticlePageMeta } from "@/lib/types/database";
 
@@ -12,15 +12,73 @@ export interface ArticleRenderContext {
   blocks: ArticleBlock[];
 }
 
-/**
- * Body blocks for the article column (excludes page-level hero when thumbnail is set).
- */
-export function getArticleBodyBlocks(
-  blocks: ArticleBlock[],
-  hasPageHero: boolean
-): ArticleBlock[] {
-  if (!hasPageHero) return blocks;
-  return blocks.filter((b) => b.type !== "hero");
+export function findHeroBlock(
+  blocks: ArticleBlock[]
+): Extract<ArticleBlock, { type: "hero" }> | undefined {
+  return blocks.find((b): b is Extract<ArticleBlock, { type: "hero" }> =>
+    b.type === "hero"
+  );
+}
+
+/** Hero image: thumbnail first, then hero block image field. */
+export function resolveHeroImageUrl(
+  context: ArticleRenderContext,
+  blocks: ArticleBlock[]
+): string | undefined {
+  if (context.heroImageUrl) return context.heroImageUrl;
+  const hero = findHeroBlock(blocks);
+  return hero?.data.image;
+}
+
+/** Body column only — never hero or sidebar takeaways. */
+export function getArticleBodyBlocks(blocks: ArticleBlock[]): ArticleBlock[] {
+  return blocks.filter(
+    (b) => b.type !== "hero" && b.type !== "key_takeaways"
+  );
+}
+
+/** Takeaways for left sidebar (metadata, blocks, or hero block data). */
+export function resolveSidebarTakeaways(
+  meta: ArticlePageMeta,
+  blocks: ArticleBlock[]
+): string[] {
+  if (meta.key_takeaways?.length) return meta.key_takeaways;
+
+  const fromBlocks = blocks
+    .filter((b): b is Extract<ArticleBlock, { type: "key_takeaways" }> =>
+      b.type === "key_takeaways"
+    )
+    .flatMap((b) => b.data.items);
+
+  if (fromBlocks.length) return fromBlocks;
+
+  const hero = findHeroBlock(blocks);
+  return hero?.data.takeaways ?? [];
+}
+
+export function buildSidebarData(
+  article: ResearchItem,
+  context: ArticleRenderContext,
+  blocks: ArticleBlock[]
+): HeroBlockData {
+  const meta = (article.metadata ?? {}) as ArticlePageMeta;
+  const hero = findHeroBlock(blocks);
+
+  return {
+    image: resolveHeroImageUrl(context, blocks) ?? "",
+    category: hero?.data.category ?? article.sector,
+    title: hero?.data.title ?? context.title,
+    subtitle: hero?.data.subtitle ?? context.subtitle ?? context.excerpt,
+    author: hero?.data.author ?? article.author,
+    publishedAt:
+      hero?.data.publishedAt ??
+      new Date(article.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    takeaways: resolveSidebarTakeaways(meta, blocks),
+  };
 }
 
 export function resolveArticleBlocks(
@@ -43,16 +101,6 @@ export function resolveArticleBlocks(
   }
 
   const blocks: ArticleBlock[] = [];
-
-  if (meta.key_takeaways?.length) {
-    blocks.push({
-      type: "key_takeaways",
-      data: {
-        title: "Key takeaways",
-        items: meta.key_takeaways,
-      },
-    });
-  }
 
   if (article.content?.trim()) {
     blocks.push({

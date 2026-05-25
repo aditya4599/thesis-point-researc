@@ -4,17 +4,14 @@ import Link from "next/link";
 import { ArticleRenderer } from "@/components/ArticleRenderer";
 import { AuthorCard } from "@/components/AuthorCard";
 import { ContentCard } from "@/components/ContentCard";
-import { NewsletterBanner } from "@/components/NewsletterBanner";
-import { SectorBadge } from "@/components/SectorBadge";
-import { ShareButton } from "@/components/ShareButton";
-
+import { HeroBlock } from "@/components/blocks/HeroBlock";
 import { toArticle } from "@/lib/adapters";
 import {
-  getArticleBodyBlocks,
+  buildSidebarData,
+  resolveHeroImageUrl,
   type ArticleRenderContext,
 } from "@/lib/content/resolve-article-blocks";
 import type { ResearchItem } from "@/lib/types";
-import { formatDate } from "@/lib/utils";
 
 interface ArticleDetailViewProps {
   article: ResearchItem;
@@ -27,108 +24,71 @@ export function ArticleDetailView({
   context,
   related,
 }: ArticleDetailViewProps) {
-  const heroImage = context.heroImageUrl;
-  const intro = context.subtitle ?? context.excerpt;
-  const bodyBlocks = getArticleBodyBlocks(context.blocks, Boolean(heroImage));
+  const blocks = context.blocks;
+  const heroImageUrl = resolveHeroImageUrl(context, blocks);
+  const sidebarData = buildSidebarData(article, context, blocks);
 
   return (
-    <div className="jpm-article">
-      <header className="jpm-article-header">
-        <div className="jpm-article-header-inner">
-          <nav className="jpm-breadcrumb" aria-label="Breadcrumb">
-            <Link href="/research">Research</Link>
-            <span className="jpm-breadcrumb-sep" aria-hidden>
-              /
-            </span>
-            <Link href="/research/articles">Articles</Link>
-            <span className="jpm-breadcrumb-sep" aria-hidden>
-              /
-            </span>
-            <span className="jpm-breadcrumb-current">{article.sector}</span>
-          </nav>
-
-          <div className="jpm-article-meta-row">
-            <SectorBadge sector={article.sector} />
-            {context.tags.map((tag) => (
-              <span key={tag} className="jpm-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="jpm-article-title">{context.title}</h1>
-
-          <p className="jpm-article-date">
-            <time dateTime={article.date}>{formatDate(article.date)}</time>
-            {article.readingTime && (
-              <span className="font-normal text-text-muted">
-                {" "}
-                · {article.readingTime}
-              </span>
-            )}
-          </p>
-
-          {intro && <p className="jpm-article-deck">{intro}</p>}
+    <div className="editorial-article">
+      <nav
+        className="editorial-breadcrumb-bar"
+        aria-label="Breadcrumb"
+      >
+        <div className="editorial-breadcrumb-inner">
+          <Link href="/research">Research</Link>
+          <span aria-hidden>/</span>
+          <Link href="/research/articles">Articles</Link>
         </div>
-      </header>
+      </nav>
 
-      {heroImage && (
-        <div className="jpm-article-hero-wrap">
-          <div className="jpm-article-hero-inner">
-            <Image
-              src={heroImage}
-              alt={context.title}
-              width={1440}
-              height={810}
-              priority
-              className="jpm-article-hero-img"
-              sizes="100vw"
+      <div className="editorial-article-shell">
+        <div className="editorial-article-grid">
+          <div className="editorial-sidebar-col">
+            <HeroBlock
+              data={sidebarData}
+              linkedinUrl={article.authorData?.linkedin_url}
+              shareTitle={context.title}
+              shareSummary={context.excerpt}
             />
           </div>
-        </div>
-      )}
 
-      <div className="jpm-article-body-wrap">
-        <div className="jpm-article-layout">
-          <article className="jpm-article-main">
-            <ArticleRenderer blocks={bodyBlocks} />
+          <div className="editorial-main-col">
+            {heroImageUrl && (
+              <figure className="editorial-hero-figure">
+                <Image
+                  src={heroImageUrl}
+                  alt={context.title}
+                  width={1600}
+                  height={900}
+                  priority
+                  className="editorial-hero-image"
+                  sizes="(max-width: 1024px) 100vw, min(820px, 65vw)"
+                />
+              </figure>
+            )}
 
-            <div className="jpm-article-share">
-              <span className="jpm-article-share-label">Share</span>
-              <ShareButton
-                title={context.title}
-                summary={context.excerpt}
-              />
+            <div className="editorial-content-body">
+              <ArticleRenderer blocks={blocks} />
             </div>
 
             {article.authorData && (
-              <section className="jpm-article-author" aria-label="Author">
-                <p className="jpm-article-author-label">About the author</p>
+              <section
+                className="editorial-author"
+                aria-label="About the author"
+              >
+                <p className="editorial-author-label">About the author</p>
                 <AuthorCard author={article.authorData} />
               </section>
             )}
-          </article>
-
-          <aside className="jpm-article-sidebar">
-            <p className="jpm-sidebar-byline">
-              <span className="font-medium text-midnight">
-                {article.author}
-              </span>
-            </p>
-            {context.excerpt && (
-              <div className="jpm-sidebar-card">
-                <h2 className="jpm-sidebar-heading">At a glance</h2>
-                <p className="jpm-sidebar-text">{context.excerpt}</p>
-              </div>
-            )}
-            <NewsletterBanner compact />
-          </aside>
+          </div>
         </div>
+      </div>
 
-        {related.length > 0 && (
-          <section className="jpm-related">
-            <h2 className="jpm-related-title">You may also like</h2>
-            <div className="jpm-related-grid">
+      {related.length > 0 && (
+        <section className="editorial-related">
+          <div className="editorial-related-inner">
+            <h2 className="editorial-related-title">You may also like</h2>
+            <div className="editorial-related-grid">
               {related.map((a) => (
                 <ContentCard
                   key={a.id}
@@ -137,9 +97,9 @@ export function ArticleDetailView({
                 />
               ))}
             </div>
-          </section>
-        )}
-      </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
