@@ -91,9 +91,13 @@
   }
 
   .editorial-sidebar-panel {
-    @apply lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto;
-  }
+    position: sticky;
+    top: 6rem;
 
+    max-height: calc(100vh - 6rem);
+
+    overflow: visible;
+  }
   .editorial-sidebar-category {
     @apply text-xs font-semibold uppercase tracking-[0.22em] text-jpm-gold;
   }
