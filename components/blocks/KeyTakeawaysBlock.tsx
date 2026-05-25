@@ -18,7 +18,7 @@ export function KeyTakeawaysBlock({ data }: { data: KeyTakeawaysBlockData }) {
           </>
         ) : null}
       </h2>
-      <ul className="jpm-block-takeaways-list">
+      <ul className="list-none jpm-block-takeaways-list">
         {data.items.map((item, index) => (
           <li key={`takeaway-${index}`} className="jpm-block-takeaways-item">
             <span className="jpm-block-takeaways-bullet" aria-hidden />

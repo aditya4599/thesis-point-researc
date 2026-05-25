@@ -46,9 +46,13 @@ export function HeroBlock({
           </h2>
           <ul className="editorial-sidebar-takeaways-list">
             {data.takeaways.map((item, index) => (
-              <li key={`sidebar-takeaway-${index}`}>
-                <span className="editorial-sidebar-bullet" aria-hidden />
-                <span>{item}</span>
+              <li
+                key={`sidebar-takeaway-${index}`}
+                className="editorial-sidebar-takeaway-item"
+              >
+
+
+                <p>{item}</p>
               </li>
             ))}
           </ul>

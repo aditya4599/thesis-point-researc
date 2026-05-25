@@ -121,15 +121,17 @@
   }
 
   .editorial-sidebar-takeaways-list {
-    @apply mt-6 space-y-4;
+    margin-top: 1.5rem;
+    padding-left: 1.2rem;
   }
 
-  .editorial-sidebar-takeaways-list li {
-    @apply flex gap-3 text-base leading-relaxed text-jpm-ink;
+  .editorial-sidebar-takeaway-item {
+    margin-bottom: 1.25rem;
   }
 
-  .editorial-sidebar-bullet {
-    @apply mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-jpm-gold;
+  .editorial-sidebar-takeaway-item p {
+    margin: 0;
+    line-height: 1.7;
   }
 
   .editorial-sidebar-socials {

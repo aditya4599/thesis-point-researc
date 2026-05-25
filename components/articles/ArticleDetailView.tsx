@@ -43,7 +43,7 @@ export function ArticleDetailView({
 
       <div className="editorial-article-shell">
         <div className="editorial-article-grid">
-          <aside className="editorial-sidebar-col sticky top-24 self-start h-fit">
+          <aside className="editorial-sidebar-col lg:sticky lg:top-24 lg:self-start lg:h-fit">
             <HeroBlock
               data={sidebarData}
               linkedinUrl={article.authorData?.linkedin_url}

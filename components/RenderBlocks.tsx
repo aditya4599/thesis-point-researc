@@ -45,7 +45,10 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
   return (
     <div className="editorial-blocks">
       {blocks.map((block, index) => (
-        <BlockNode key={blockKey(block, index)} block={block} />
+        <BlockNode
+          key={blockKey(block, index)}
+          block={block}
+        />
       ))}
     </div>
   );
