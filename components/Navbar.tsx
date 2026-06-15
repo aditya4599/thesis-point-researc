@@ -198,10 +198,19 @@ export function Navbar() {
                   All Research
                 </Link>
                 <hr className="border-border" />
-                <Link href="/about" onClick={() => setMenuOpen(false)}>
+                <Link
+                  href="/about"
+                  className="block text-lg font-medium text-midnight"
+                  onClick={() => setMenuOpen(false)}
+                >
                   About
                 </Link>
-                <Link href="/contact" onClick={() => setMenuOpen(false)}>
+
+                <Link
+                  href="/contact"
+                  className="block text-lg font-medium text-midnight"
+                  onClick={() => setMenuOpen(false)}
+                >
                   Contact
                 </Link>
                 <Button asChild className="w-full">

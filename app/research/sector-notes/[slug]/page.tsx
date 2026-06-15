@@ -4,7 +4,6 @@ import { AuthorCard } from "@/components/AuthorCard";
 import { SectorBadge } from "@/components/SectorBadge";
 import { getReportBySlug } from "@/lib/queries/reports";
 import { formatDate } from "@/lib/utils";
-
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {

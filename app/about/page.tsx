@@ -2,7 +2,6 @@ import { AuthorCard } from "@/components/AuthorCard";
 import { getAuthors } from "@/lib/queries/authors";
 
 export const dynamic = "force-dynamic";
-
 const pillars = [
   {
     title: "Independent",

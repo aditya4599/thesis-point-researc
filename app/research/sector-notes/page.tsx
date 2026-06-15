@@ -4,7 +4,6 @@ import { SECTORS } from "@/lib/constants";
 import { getPublishedReports } from "@/lib/queries/reports";
 import { formatDate } from "@/lib/utils";
 import type { Sector } from "@/lib/types";
-
 export const dynamic = "force-dynamic";
 
 export const metadata = {

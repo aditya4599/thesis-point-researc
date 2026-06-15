@@ -4,7 +4,6 @@ import { getArticleBySlug } from "@/lib/queries/articles";
 import { getPublishedReports } from "@/lib/queries/reports";
 
 export const dynamic = "force-dynamic";
-
 export async function generateMetadata({
   params,
 }: {
