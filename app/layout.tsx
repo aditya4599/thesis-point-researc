@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "ThesisPoint Research",
+    default: "ThesisPoint Research | Equity Research, Stock Reports & Market Analysis",
     template: "%s | ThesisPoint Research",
   },
   description:

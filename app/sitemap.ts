@@ -7,6 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await getPublishedReports({
     category: "article",
   });
+  
 
   const articleUrls = articles.map((article) => ({
     url: `${baseUrl}/research/articles/${article.slug}`,
