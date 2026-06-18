@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     default: "ThesisPoint Research | Equity Research, Stock Reports & Market Analysis",
     template: "%s | ThesisPoint Research",
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
   description:
     "Conviction-driven investment research — stock reports, pitch decks, and market intelligence for serious investors.",
 };
