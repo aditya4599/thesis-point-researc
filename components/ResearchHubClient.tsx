@@ -98,7 +98,9 @@ export function ResearchHubClient({ items }: ResearchHubClientProps) {
       .sort((a, b) => b.upside - a.upside);
   }, [filtered]);
 
-  const activeSlug = recos.some((x) => x.r.slug === selected) ? selected : recos[0]?.slug ?? null;
+const activeSlug = recos.some((x) => x.r.slug === selected)
+  ? selected
+  : recos[0]?.r.slug ?? null;
   const activePreview = recos.find((x) => x.r.slug === activeSlug)?.r ?? null;
   const activeUpside = activePreview ? upsideOf(activePreview) ?? 0 : 0;
 
