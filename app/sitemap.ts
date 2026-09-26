@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getPublishedReports } from "@/lib/queries/reports";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://thesispointresearch.com";
+  const baseUrl = "https://www.thesispointresearch.com";
 
   const articles = await getPublishedReports({
     category: "article",

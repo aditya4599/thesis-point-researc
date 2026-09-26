@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { DisclaimerRibbon } from "@/components/DisclaimerRibbon";
+import { StructuredData } from "@/components/structred";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,15 +18,36 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.thesispointresearch.com"),
+
   title: {
-    default: "ThesisPoint Research | Equity Research, Stock Reports & Market Analysis",
+    default:
+      "ThesisPoint Research | Equity Research, Stock Reports & Market Analysis",
     template: "%s | ThesisPoint Research",
   },
+
+  description:
+    "Conviction-driven investment research — stock reports, pitch decks, and market intelligence for serious investors.",
+
+  applicationName: "ThesisPoint Research",
+
   icons: {
     icon: "/favicon.ico",
   },
-  description:
-    "Conviction-driven investment research — stock reports, pitch decks, and market intelligence for serious investors.",
+
+  alternates: {
+    canonical: "https://www.thesispointresearch.com/",
+  },
+
+  openGraph: {
+    title:
+      "ThesisPoint Research | Equity Research, Stock Reports & Market Analysis",
+    description:
+      "Conviction-driven investment research — stock reports, pitch decks, and market intelligence for serious investors.",
+    url: "https://www.thesispointresearch.com/",
+    siteName: "ThesisPoint Research",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -38,9 +60,14 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} min-h-screen pb-10 font-sans`}
       >
+        <StructuredData />
+
         <Navbar />
+
         <main>{children}</main>
+
         <Footer />
+
         <DisclaimerRibbon />
       </body>
     </html>

@@ -78,8 +78,8 @@ export async function saveReport(formData: FormData) {
   if (rating) metadata.rating = rating as ReportMetadata["rating"];
   const targetPrice = formData.get("target_price") as string;
   if (targetPrice) metadata.target_price = parseFloat(targetPrice);
-  const currentPrice = formData.get("current_price") as string;
-  if (currentPrice) metadata.current_price = parseFloat(currentPrice);
+  const current_Price = formData.get("current_price") as string;
+  if (current_Price) metadata.current_price = parseFloat(current_Price);
   const companyName = formData.get("company_name") as string;
   if (companyName) metadata.company_name = companyName;
   const thesis = formData.get("thesis") as string;
